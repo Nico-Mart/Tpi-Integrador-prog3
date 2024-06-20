@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Tpi-Integrador-prog3.props" />
+</Project>

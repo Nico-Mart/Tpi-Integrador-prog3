@@ -1,0 +1,6 @@
+@Tpi_Integrador_prog3_HostAddress = http://localhost:5234
+
+GET {{Tpi_Integrador_prog3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

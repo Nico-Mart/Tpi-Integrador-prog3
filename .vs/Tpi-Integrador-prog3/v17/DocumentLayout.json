@@ -1,0 +1,110 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5DBC790B-51F9-4B41-ACFF-CDDA59AB12DA}|Infrastructure\\Infrastructure.csproj|c:\\users\\nicom\\desktop\\tpi\\tpi-integrador-prog3\\infrastructure\\data\\service\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DBC790B-51F9-4B41-ACFF-CDDA59AB12DA}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\service\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9DDEC20-347A-435E-9637-34BACC5359A0}|Application\\Application.csproj|c:\\users\\nicom\\desktop\\tpi\\tpi-integrador-prog3\\application\\models\\request\\authenticationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9DDEC20-347A-435E-9637-34BACC5359A0}|Application\\Application.csproj|solutionrelative:application\\models\\request\\authenticationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70A81DD9-A82C-471D-8FE4-A5CD08716E03}|Tpi-Integrador-prog3\\Web.csproj|c:\\users\\nicom\\desktop\\tpi\\tpi-integrador-prog3\\tpi-integrador-prog3\\controllers\\authenticatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70A81DD9-A82C-471D-8FE4-A5CD08716E03}|Tpi-Integrador-prog3\\Web.csproj|solutionrelative:tpi-integrador-prog3\\controllers\\authenticatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:217805213:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143336270:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:162660846:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:932827336:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138134017:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthenticationRequest.cs",
+              "DocumentMoniker": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Application\\Models\\Request\\AuthenticationRequest.cs",
+              "RelativeDocumentMoniker": "Application\\Models\\Request\\AuthenticationRequest.cs",
+              "ToolTip": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Application\\Models\\Request\\AuthenticationRequest.cs",
+              "RelativeToolTip": "Application\\Models\\Request\\AuthenticationRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-13T22:13:13.366Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthenticationService.cs",
+              "DocumentMoniker": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Infrastructure\\Data\\Service\\AuthenticationService.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\Service\\AuthenticationService.cs",
+              "ToolTip": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Infrastructure\\Data\\Service\\AuthenticationService.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\Service\\AuthenticationService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAgwCsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-13T22:30:18.142Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthenticateController.cs",
+              "DocumentMoniker": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Tpi-Integrador-prog3\\Controllers\\AuthenticateController.cs",
+              "RelativeDocumentMoniker": "Tpi-Integrador-prog3\\Controllers\\AuthenticateController.cs",
+              "ToolTip": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Tpi-Integrador-prog3\\Controllers\\AuthenticateController.cs",
+              "RelativeToolTip": "Tpi-Integrador-prog3\\Controllers\\AuthenticateController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-13T22:21:08.793Z",
+              "IsPinned": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
