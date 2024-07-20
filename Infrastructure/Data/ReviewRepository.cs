@@ -20,12 +20,12 @@ namespace Infrastructure.Data
         public void CreateReview(Review review)
         {
             _context.Reviews.Add(review);
-            _context.SaveChanges();
+            SaveChanges();
         }
         public void UpdateReview(Review review)
         {
             _context.Reviews.Update(review);
-            _context.SaveChanges();
+            SaveChanges();
         }
 
         public void DeleteReview(Review reviewId)
@@ -34,7 +34,7 @@ namespace Infrastructure.Data
             if (reviewToDelete != null)
             {
                 _context.Reviews.Remove(reviewToDelete);
-                _context.SaveChanges();
+                SaveChanges();
             }
         }
         public IEnumerable<Review> GetAllReviews()

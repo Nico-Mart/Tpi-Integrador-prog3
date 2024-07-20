@@ -8,6 +8,7 @@ namespace Tpi_Integrador_prog3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
 
@@ -17,58 +18,78 @@ namespace Tpi_Integrador_prog3.Controllers
             _userService = userService;
         }
         [HttpGet("GetAllUsers")]
-        //[Authorize("Admin")]
+        [Authorize("Admin")]
         public IActionResult GetAllUsers()
         {
             return Ok(_userService.GetAllUsers());
         }
 
         [HttpPost("CreateSubscriber")]
-        //[Authorize("All")]
+        [Authorize("All")]
         public IActionResult CreateSub([FromBody] SubscriberDto subscriberDto)
         {
-            _userService.CreateSubscriber(subscriberDto);
-            return StatusCode(201);
+            var result = _userService.CreateSubscriber(subscriberDto);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return StatusCode(StatusCodes.Status201Created, result.Message);
         }
 
         [HttpPost("CreateAdmin")]
-        //[Authorize("Admin")]
+        [Authorize("Admin")]
         public IActionResult CreateAdmin([FromBody] AdminDto adminDto)
         {
-            _userService.CreateAdmin(adminDto);
-            return StatusCode(201);
+            var result = _userService.CreateAdmin(adminDto);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return StatusCode(StatusCodes.Status201Created, result.Message);
         }
 
         [HttpPost("CreateMusician")]
-        //[Authorize("Admin")]
+        [Authorize("Admin")]
         public IActionResult CreateMusician([FromBody] MusicianDto musicianDto)
         {
-            _userService.CreateMusician(musicianDto);
-            return StatusCode(201);
+            var result = _userService.CreateMusician(musicianDto);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return StatusCode(StatusCodes.Status201Created, result.Message);
         }
         [HttpPut("{idSubscriber}")]
-        //[Authorize("Client")]
-        public IActionResult UpdateSubscriber(int id, SubscriberDto subscriber)
+        [Authorize("Client")]
+        public IActionResult UpdateSubscriber(int idSubscriber, [FromBody] SubscriberDto subscriber)
         {
-            _userService.UpdateSubscriber(id, subscriber);
-            return Ok();
+            var result = _userService.UpdateSubscriber(idSubscriber, subscriber);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result.Message);
         }
         [HttpPut("{idMusician}")]
-        //[Authorize("Client")]
-        public IActionResult UpdateMusician(int id, MusicianDto musician)
+        [Authorize("Musician")]
+        public IActionResult UpdateMusician(int idMusician, [FromBody] MusicianDto musician)
         {
-            _userService.UpdateMusician(id, musician);
-            return Ok();
+            var result = _userService.UpdateMusician(idMusician, musician);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result.Message);
         }
         [HttpDelete("DeleteUserById/{id}")]
-        //[Authorize("Admin")]
+        [Authorize("Admin")]
         public IActionResult DeleteUserById(int id)
         {
             _userService.DeleteUserById(id);
             return Ok("User Delete");
         }
         [HttpDelete("DeleteUserByEmail/{email}")]
-        //[Authorize("Admin")]
+        [Authorize("Admin")]
         public IActionResult DeleteUserByEmail(string email)
         {
             _userService.DeleteUserByEmail(email);
@@ -76,7 +97,7 @@ namespace Tpi_Integrador_prog3.Controllers
         }
 
         [HttpGet("GetUserByUsername/{username}")]
-        //[Authorize("Admin")]
+        [Authorize("Admin")]
         public IActionResult GetUserByUserName(string username)
         {
             var result = _userService.GetUserByUserName(username);
@@ -88,7 +109,7 @@ namespace Tpi_Integrador_prog3.Controllers
         }
 
         [HttpGet("GeUserByEmail{email}")]
-        //[Authorize("Admin")]
+        [Authorize("Admin")]
         public IActionResult GetUserByEmail(string email)
         {
             var result = _userService.GetUserByEmail(email);

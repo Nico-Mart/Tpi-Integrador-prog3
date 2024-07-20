@@ -10,7 +10,7 @@ namespace Domain.Interfaces
     public interface IAlbunRepository
     {
         IEnumerable<Albun> GetAllAlbun();
-        Albun? GetAlbunById(int id);
+        Albun? GetAlbunById(int albunId);
         void AddAlbun(Albun albun);
         void UpdateAlbun(Albun albun);
         void DeleteAlbun(Albun albun);

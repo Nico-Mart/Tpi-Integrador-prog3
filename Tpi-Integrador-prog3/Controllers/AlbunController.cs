@@ -33,7 +33,7 @@ namespace Tpi_Integrador_prog3.Controllers
         public IActionResult CreateAlbun([FromBody] AlbunDto albunDto)
         {
             _albunService.CreateAlbun(albunDto);
-            return Ok();
+            return Ok("Albun Created");
         }
         [HttpDelete("DeleteAlbun")]
         public IActionResult DeleteAlbun([FromRoute] int albunId)

@@ -20,56 +20,33 @@ namespace Infrastructure.Data
         public void CreateSubscriber(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
+            SaveChanges();
         }
         public void CreateAdmin(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
+            SaveChanges();
         }
         public void CreateMusician(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
+            SaveChanges();
         }
         public User? GetUserById(int userId)
         {
             return _context.Users.Find(userId);
         }
 
-        public BaseResponse ValidateUser(Authenticate authenticate)
-        {
-            BaseResponse response = new BaseResponse();
-            User? user = _context.Users.SingleOrDefault(u => u.UserName == authenticate.UserName);
-            if (user != null)
-            {
-                if (user.Password == authenticate.Password)
-                {
-                    response.Result = true;
-                    response.Message = "Logged In";
-                }
-                else
-                {
-                    response.Result = false;
-                    response.Message = "Incorrect Password";
-                }
-            }
-            else
-            {
-                response.Result = false;
-                response.Message = "Incorrect Email";
-            }
-            return response;
-        }
-
         public void UpdateUser(User user)
         {
             _context.Users.Update(user);
+            SaveChanges();
         }
 
         public void DeleteUser(User user)
         {
             _context.Users.Remove(user);
+            SaveChanges();
         }
         public User? GetUserByEmail(string email)
         {

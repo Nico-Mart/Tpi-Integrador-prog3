@@ -4,6 +4,7 @@ using Domain.Entities;
 using Application.Interfaces;
 using Application.Models;
 using AutoMapper;
+using Application.Common;
 
 namespace Application.Services
 {
@@ -11,70 +12,80 @@ namespace Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        private readonly IOperationResultService _operationResultService;
+        public UserService(IUserRepository userRepository, IMapper mapper, IOperationResultService operationResultService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _operationResultService = operationResultService;
         }
         public IEnumerable<User> GetAllUsers()
         {
             return _userRepository.GetAllUsers();
         }
-        public void CreateSubscriber(SubscriberDto subscriberDto)
+        public OperationResult CreateSubscriber(SubscriberDto subscriberDto)
         {
             if (!ValidatePassword(subscriberDto.Password))
             {
-                throw new Exception("The password does not meet the requirements. it must have at least one number and one special character");
+                return _operationResultService.CreateFailureResult("The password does not meet the requirements.");
             }
             var newSub = _mapper.Map<Subscriber>(subscriberDto);
             _userRepository.CreateSubscriber(newSub);
             _userRepository.SaveChanges();
+
+            return _operationResultService.CreateSuccessResult("Subscriber created successfully");
         }
-        public void CreateAdmin(AdminDto adminDto)
+        public OperationResult CreateAdmin(AdminDto adminDto)
         {
             if (!ValidatePassword(adminDto.Password))
             {
-                throw new Exception("The password does not meet the requirements. it must have at least one number and one special character");
+                return _operationResultService.CreateFailureResult("The password does not meet the requirements.");
             }
+
             var newAdmin = _mapper.Map<Admin>(adminDto);
             _userRepository.CreateAdmin(newAdmin);
             _userRepository.SaveChanges();
 
+            return _operationResultService.CreateSuccessResult("Admin created successfully");
+
         }
-        public void CreateMusician(MusicianDto musicianDto)
+        public OperationResult CreateMusician(MusicianDto musicianDto)
         {
             if (!ValidatePassword(musicianDto.Password))
             {
-                    throw new Exception("The password does not meet the requirements. it must have at least one number and one special character");
+                return _operationResultService.CreateFailureResult("The password does not meet the requirements.");
             }
             var newMusician = _mapper.Map<Musician>(musicianDto);
             _userRepository.CreateMusician(newMusician);
+            return _operationResultService.CreateSuccessResult("Musician created successfully");
         }
-        public void UpdateSubscriber(int id, SubscriberDto subscriber)
+        public OperationResult UpdateSubscriber(int id, SubscriberDto subscriber)
         {
             var existsUser = _userRepository.GetUserById(id);
             if (existsUser == null)
             {
-                throw new Exception("User Not Found");
+                return _operationResultService.CreateFailureResult("User Not Found");
             }
             existsUser.UserName = subscriber.UserName;
             existsUser.Email = subscriber.Email;
 
             _userRepository.UpdateUser(existsUser);
             _userRepository.SaveChanges();
+            return _operationResultService.CreateSuccessResult("Subscriber Updated successfully");
         }
-        public void UpdateMusician(int id, MusicianDto musician)
+        public OperationResult UpdateMusician(int id, MusicianDto musician)
         {
             var existsUser = _userRepository.GetUserById(id);
             if (existsUser == null)
             {
-                throw new Exception("User Not Found");
+                return _operationResultService.CreateFailureResult("User Not Found");
             }
             existsUser.UserName = musician.UserName;
             existsUser.Email = musician.Email;
 
             _userRepository.UpdateUser(existsUser);
             _userRepository.SaveChanges();
+            return _operationResultService.CreateSuccessResult("Musician Updated successfully");
         }
         public bool DeleteUserById(int id)
         {
@@ -101,7 +112,8 @@ namespace Application.Services
 
         static bool ValidatePassword(string password)
         {
-            if (password.Length <= 6 && password.Length >= 12)
+            
+            if (password.Length <= 6 || password.Length >= 12)
             {
                 return false;
             }
@@ -113,7 +125,7 @@ namespace Application.Services
             {
                 return false;
             }
-            if (!Regex.IsMatch(password, "[a-zA-Z]"))
+            if (!Regex.IsMatch(password, "[a-z]"))
             {
                 return false;
             }

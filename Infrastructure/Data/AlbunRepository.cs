@@ -16,11 +16,13 @@ namespace Infrastructure.Data
         public void AddAlbun(Albun albun)
         {
             _context.Add(albun);
+            SaveChanges();
         }
 
         public void DeleteAlbun(Albun albun)
         {
             _context.Remove(albun);
+            SaveChanges();
         }
 
         public IEnumerable<Albun> GetAllAlbun()
@@ -36,6 +38,7 @@ namespace Infrastructure.Data
         public void UpdateAlbun(Albun albun)
         {
             _context.Albuns.Update(albun);
+            SaveChanges();
         }
     }
 }

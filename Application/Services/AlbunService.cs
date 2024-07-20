@@ -47,13 +47,20 @@ namespace Application.Services
                 throw new InvalidOperationException("Musician Name cannot be empty.");
             }
         }
-
         public void DeleteAlbun(int albunId)
         {
-            var albunDelete = _mapper.Map<Albun>(albunId);
-            _albunRepository.DeleteAlbun(albunDelete);
-        }
+            var albunDelete = _albunRepository.GetAlbunById(albunId);
 
+            
+            if (albunDelete != null)
+            {
+                _albunRepository.DeleteAlbun(albunDelete);
+            }
+            else
+            {
+                throw new KeyNotFoundException("Albun not found");
+            }
+        }
         public void UpdateAlbun(int albunId ,AlbunDto albunDto)
         {
             var existAlbun = _albunRepository.GetAlbunById(albunId);

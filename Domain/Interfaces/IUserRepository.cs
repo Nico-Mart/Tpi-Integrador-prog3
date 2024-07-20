@@ -8,7 +8,6 @@ namespace Domain.Interfaces
         IEnumerable<User> GetAllUsers();
         User? GetUserById(int userId);
         User? GetUserByUserName(string username);
-        BaseResponse ValidateUser(Authenticate authenticate);
         User? GetUserByEmail(string email);
         void CreateSubscriber(User user);
         void CreateAdmin(User user);
