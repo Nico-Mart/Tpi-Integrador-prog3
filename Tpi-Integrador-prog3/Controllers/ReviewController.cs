@@ -38,10 +38,10 @@ namespace Tpi_Integrador_prog3.Controllers
             _reviewService.CreateReview(reviewDto);
             return StatusCode(201);
         }
-        [HttpDelete("DeeleteReview")]
-        public IActionResult DeleteReview([FromRoute] int reviewid)
+        [HttpDelete("DeeleteReview/{reviewId}")]
+        public IActionResult DeleteReview([FromRoute] int reviewId)
         {
-            _reviewService.DeleteReview(reviewid);
+            _reviewService.DeleteReview(reviewId);
             return Ok("Delete success");
         }
         [HttpPut("UpdateReview/{reviewId}")]

@@ -59,8 +59,8 @@ namespace Tpi_Integrador_prog3.Controllers
             }
             return StatusCode(StatusCodes.Status201Created, result.Message);
         }
-        [HttpPut("{idSubscriber}")]
-        [Authorize("Client")]
+        [HttpPut("UpdateSubscriber/{idSubscriber}")]
+        [Authorize("Subscriber")]
         public IActionResult UpdateSubscriber(int idSubscriber, [FromBody] SubscriberDto subscriber)
         {
             var result = _userService.UpdateSubscriber(idSubscriber, subscriber);
@@ -70,7 +70,7 @@ namespace Tpi_Integrador_prog3.Controllers
             }
             return Ok(result.Message);
         }
-        [HttpPut("{idMusician}")]
+        [HttpPut("UpdateMusician/{idMusician}")]
         [Authorize("Musician")]
         public IActionResult UpdateMusician(int idMusician, [FromBody] MusicianDto musician)
         {

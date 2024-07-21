@@ -11,11 +11,13 @@ namespace Application.Services
         private readonly IReviewRepository _reviewRepository;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public ReviewService(IReviewRepository reviewRepository, IUserRepository userRepository, IMapper mapper)
+        private readonly IOperationResultService _operationResultService;
+        public ReviewService(IReviewRepository reviewRepository, IUserRepository userRepository, IMapper mapper, IOperationResultService operationResultService)
         {
             _reviewRepository = reviewRepository;
             _mapper = mapper;
             _userRepository = userRepository;
+            _operationResultService = operationResultService;
         }
 
         public void CreateReview(ReviewDto reviewdto)
@@ -29,13 +31,21 @@ namespace Application.Services
             }
             else
             {
-                throw new InvalidOperationException("SubscriberUserName cannot be empty.");
+                _operationResultService.CreateFailureResult("SubscriberUserName cannot be empty.");
             }
+
         }
-        public void DeleteReview(int reviewId)
+        public bool DeleteReview(int reviewId)
         {
-            var Reviewdelete = _mapper.Map<Review>(reviewId);
-            _reviewRepository.CreateReview(Reviewdelete);
+            var review = _reviewRepository.GetReviewById(reviewId);
+            if (review != null)
+            {
+                _reviewRepository.DeleteReview(review);
+                _reviewRepository.SaveChanges();
+                return true;
+            }
+            _operationResultService.CreateFailureResult("Review not found");
+            return false;
         }
         public IEnumerable<Review> GetAllReviews()
         {
@@ -57,7 +67,7 @@ namespace Application.Services
             var existsReview = _reviewRepository.GetReviewById(reviewId);
             if (existsReview == null)
             {
-                throw new InvalidOperationException("Review not found");
+                _operationResultService.CreateFailureResult("Review not found");
             }
             existsReview.AlbunId = reviewdto.AlbunId;
             existsReview.SubscriberId = existsReview.SubscriberId;

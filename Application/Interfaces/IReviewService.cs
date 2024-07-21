@@ -11,6 +11,6 @@ namespace Application.Interfaces
         public List<Review> GetReviewsFromAlbunId(int albunId);
         void CreateReview(ReviewDto reviewdto);
         void UpdateReview(int reviewId, ReviewDto reviewdto);
-        void DeleteReview(int reviewId);
+        bool DeleteReview(int reviewId);
     }
 }

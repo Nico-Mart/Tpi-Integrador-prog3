@@ -15,10 +15,13 @@ namespace Infrastructure.Data.Service
     {
         private readonly IUserRepository _userRepository;
         private readonly AutenticacionServiceOptions _options;
-        public AuthenticacionService(IUserRepository userRepository, AutenticacionServiceOptions options)
+        private readonly IOperationResultService _operationResultService;
+        public AuthenticacionService(IUserRepository userRepository, IOptions<AutenticacionServiceOptions> options, IOperationResultService operationResultService)
         {
             _userRepository = userRepository;
-            _options = options;
+            _options = options.Value;
+            _operationResultService = operationResultService;
+
         }
 
         public User? ValidateUser(AuthenticacionRequest authenticationRequest)
@@ -30,35 +33,33 @@ namespace Infrastructure.Data.Service
 
             if (user == null) return null;
 
-            if (authenticationRequest.UserType == UserType.Subscriber|| authenticationRequest.UserType == UserType.Musician|| authenticationRequest.UserType == UserType.Admin)
+            if (user.Password == authenticationRequest.Password)
             {
-                if (user.Password == authenticationRequest.Password) return user;
+                return user;
             }
 
             return null;
-
         }
         public string Autenticar(AuthenticacionRequest authenticationRequest)
         {
-            var user = ValidateUser(authenticationRequest); 
+            var user = ValidateUser(authenticationRequest);
             if (user == null)
             {
-                throw new Exception("User authentication failed");
+                _operationResultService.CreateFailureResult("User authentication failed");
             }
 
-
-
-            var securityPassword = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_options.SecretForKey)); 
+            var securityPassword = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_options.SecretForKey));
 
             var credentials = new SigningCredentials(securityPassword, SecurityAlgorithms.HmacSha256);
 
+            var claimsForToken = new List<Claim>
+            {
+                new Claim("sub", user.Id.ToString()),
+                new Claim("UserName", user.UserName),
+                new Claim("role", user.UserType.ToString())
+            };
 
-            var claimsForToken = new List<Claim>();
-            claimsForToken.Add(new Claim("sub", user.Id.ToString()));
-            claimsForToken.Add(new Claim("UserName", user.UserName)); 
-            claimsForToken.Add(new Claim("role", authenticationRequest.UserType.ToString())); // Reclamo del rol
-
-            var jwtSecurityToken = new JwtSecurityToken( 
+            var jwtSecurityToken = new JwtSecurityToken(
               _options.Issuer,
               _options.Audience,
               claimsForToken,
@@ -66,12 +67,11 @@ namespace Infrastructure.Data.Service
               DateTime.UtcNow.AddHours(1),
               credentials);
 
-            var tokenToReturn = new JwtSecurityTokenHandler() 
+            var tokenToReturn = new JwtSecurityTokenHandler()
                 .WriteToken(jwtSecurityToken);
 
-            return tokenToReturn.ToString();
+            return tokenToReturn;
         }
-
     }
     public class AutenticacionServiceOptions
     {

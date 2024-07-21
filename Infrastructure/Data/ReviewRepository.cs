@@ -30,12 +30,10 @@ namespace Infrastructure.Data
 
         public void DeleteReview(Review reviewId)
         {
-            var reviewToDelete = _context.Reviews.Find(reviewId);
-            if (reviewToDelete != null)
-            {
-                _context.Reviews.Remove(reviewToDelete);
+
+                _context.Reviews.Remove(reviewId);
                 SaveChanges();
-            }
+            
         }
         public IEnumerable<Review> GetAllReviews()
         {

@@ -16,11 +16,13 @@ namespace Application.Services
         private readonly IAlbunRepository _albunRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public AlbunService(IAlbunRepository albunRepository,IUserRepository userRepository, IMapper mapper)
+        private readonly IOperationResultService _operationResultService;
+        public AlbunService(IAlbunRepository albunRepository,IUserRepository userRepository, IMapper mapper, IOperationResultService operationResultService)
         {
             _albunRepository = albunRepository;
             _userRepository = userRepository;
             _mapper = mapper;
+            _operationResultService = operationResultService;
         }
 
         public Albun? GetAlbunById(int id)
@@ -44,22 +46,18 @@ namespace Application.Services
             }
             else
             {
-                throw new InvalidOperationException("Musician Name cannot be empty.");
+                _operationResultService.CreateFailureResult("Musician Name cannot be empty.");
             }
         }
-        public void DeleteAlbun(int albunId)
+        public bool DeleteAlbun(int albunId)
         {
             var albunDelete = _albunRepository.GetAlbunById(albunId);
-
-            
             if (albunDelete != null)
             {
                 _albunRepository.DeleteAlbun(albunDelete);
+                return true;
             }
-            else
-            {
-                throw new KeyNotFoundException("Albun not found");
-            }
+            return false;
         }
         public void UpdateAlbun(int albunId ,AlbunDto albunDto)
         {

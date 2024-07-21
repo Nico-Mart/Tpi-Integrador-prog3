@@ -14,6 +14,6 @@ namespace Application.Interfaces
         Albun? GetAlbunById(int id);
         void CreateAlbun(AlbunDto albunDto);
         void UpdateAlbun(int albunId,AlbunDto albunDto);
-        void DeleteAlbun(int albunId);
+        bool DeleteAlbun(int albunId);
     }
 }

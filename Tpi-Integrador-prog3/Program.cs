@@ -49,29 +49,31 @@ builder.Services.AddDbContext<AlbunsContext>(dbContextOptions => dbContextOption
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Configuración de autenticación JWT
-builder.Services.AddAuthentication("Bearer") 
-    .AddJwtBearer(options => 
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new()
+        var issuer = builder.Configuration["AutenticacionService:Issuer"];
+        var audience = builder.Configuration["AutenticacionService:Audience"];
+        var secretForKey = builder.Configuration["AutenticacionService:SecretForKey"];
+
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["AutenticacionService:Issuer"],
-            ValidAudience = builder.Configuration["AutenticacionService:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["AutenticacionService:SecretForKey"]))
+            ValidIssuer = issuer,
+            ValidAudience = audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretForKey))
         };
+    });
 
-    }
-
-);
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
     options.AddPolicy("Musician", policy => policy.RequireClaim(ClaimTypes.Role, "Musician"));
-    options.AddPolicy("Client", policy => policy.RequireClaim(ClaimTypes.Role, "Client"));
-    options.AddPolicy("All", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Musician", "Client"));
+    options.AddPolicy("Subscriber", policy => policy.RequireClaim(ClaimTypes.Role, "Subscriber"));
+    options.AddPolicy("All", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Musician", "Subscriber"));
 });
 // Configuración de dependencias
 #region Repositories
@@ -83,12 +85,7 @@ builder.Services.AddScoped<IAlbunRepository, AlbunRepository>();
 #region Services
 builder.Services.Configure<AutenticacionServiceOptions>(
     builder.Configuration.GetSection(AutenticacionServiceOptions.AutenticacionService));
-builder.Services.AddScoped<ICustomAuthenticacionService>(sp =>
-{
-    var options = sp.GetRequiredService<IOptions<AutenticacionServiceOptions>>().Value;
-    var userRepository = sp.GetRequiredService<IUserRepository>();
-    return new AuthenticacionService(userRepository, options);
-});
+builder.Services.AddScoped<ICustomAuthenticacionService, AuthenticacionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IAlbunService, AlbunService>();
