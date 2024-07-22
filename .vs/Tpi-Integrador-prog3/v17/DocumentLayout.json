@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{70A81DD9-A82C-471D-8FE4-A5CD08716E03}|Tpi-Integrador-prog3\\Web.csproj|c:\\users\\nicom\\desktop\\tpi\\tpi-integrador-prog3\\tpi-integrador-prog3\\controllers\\albuncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70A81DD9-A82C-471D-8FE4-A5CD08716E03}|Tpi-Integrador-prog3\\Web.csproj|solutionrelative:tpi-integrador-prog3\\controllers\\albuncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B9DDEC20-347A-435E-9637-34BACC5359A0}|Application\\Application.csproj|c:\\users\\nicom\\desktop\\tpi\\tpi-integrador-prog3\\application\\services\\reviewservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B9DDEC20-347A-435E-9637-34BACC5359A0}|Application\\Application.csproj|solutionrelative:application\\services\\reviewservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,7 +58,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "AlbunController.cs",
+              "DocumentMoniker": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Tpi-Integrador-prog3\\Controllers\\AlbunController.cs",
+              "RelativeDocumentMoniker": "Tpi-Integrador-prog3\\Controllers\\AlbunController.cs",
+              "ToolTip": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Tpi-Integrador-prog3\\Controllers\\AlbunController.cs",
+              "RelativeToolTip": "Tpi-Integrador-prog3\\Controllers\\AlbunController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-22T01:13:15.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "IReviewService.cs",
               "DocumentMoniker": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Application\\Interfaces\\IReviewService.cs",
               "RelativeDocumentMoniker": "Application\\Interfaces\\IReviewService.cs",
@@ -66,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ReviewService.cs",
               "DocumentMoniker": "C:\\Users\\nicom\\Desktop\\Tpi\\Tpi-Integrador-prog3\\Application\\Services\\ReviewService.cs",
               "RelativeDocumentMoniker": "Application\\Services\\ReviewService.cs",
@@ -74,8 +91,7 @@
               "RelativeToolTip": "Application\\Services\\ReviewService.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAmwBsAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-21T18:08:57.171Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-21T18:08:57.171Z"
             }
           ]
         }
