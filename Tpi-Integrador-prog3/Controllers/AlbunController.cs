@@ -7,6 +7,7 @@ namespace Tpi_Integrador_prog3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class AlbunController : ControllerBase
     {
         private readonly IAlbunService _albunService;
