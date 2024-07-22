@@ -1,6 +1,9 @@
 # Tpi-Integrador-prog3
-###Integrante
+### Integrante
 Nicolás Martinez , Legajo: 50630 
+
+## Diagrama de Clase:
+![Diagrama_de_clase](https://github.com/user-attachments/assets/ba723fa3-abd7-4734-87bb-b90e33edca48)
 
 ### El Programa Cuenta Con:
 
