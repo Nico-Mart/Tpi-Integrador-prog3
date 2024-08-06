@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Common;
+using Application.Interfaces;
 using Application.Models;
 using AutoMapper;
 using Domain.Entities;
@@ -25,28 +26,36 @@ namespace Application.Services
             _operationResultService = operationResultService;
         }
 
-        public Albun? GetAlbunById(int id)
+        public AlbunDto? GetAlbunById(int id)
         {
-            return _albunRepository.GetAlbunById(id);
+
+            var albun = _albunRepository.GetAlbunById(id);
+            return _mapper.Map<AlbunDto>(albun);
         }
-        public IEnumerable<Albun> GetAllAlbun()
+        public IEnumerable<AlbunDto> GetAllAlbun()
         {
-            return _albunRepository.GetAllAlbun();
+            var albun = _albunRepository.GetAllAlbun();
+            return _mapper.Map<IEnumerable<AlbunDto>>(albun);
         }
 
-        public void CreateAlbun(AlbunDto albunDto)
+        public OperationResult CreateAlbun(AlbunDto albunDto)
         {
 
             var user = _userRepository.GetUserById(albunDto.MusicianId);
+            if (user == null)
+            {
+                return _operationResultService.CreateFailureResult("Musician not found.");
+            }
             albunDto.MusicianName = user.UserName;
             if (!string.IsNullOrEmpty(albunDto.MusicianName))
             {
                 var newAlbun = _mapper.Map<Albun>(albunDto);
-                _albunRepository.AddAlbun(newAlbun);
+                 _albunRepository.AddAlbun(newAlbun);
+                return _operationResultService.CreateSuccessResult("Albun created successfully.");
             }
             else
             {
-                _operationResultService.CreateFailureResult("Musician Name cannot be empty.");
+                return _operationResultService.CreateFailureResult("Musician Name cannot be empty.");
             }
         }
         public bool DeleteAlbun(int albunId)
@@ -59,22 +68,31 @@ namespace Application.Services
             }
             return false;
         }
-        public void UpdateAlbun(int albunId ,AlbunDto albunDto)
+        public OperationResult UpdateAlbun(int albunId ,AlbunDto albunDto)
         {
             var existAlbun = _albunRepository.GetAlbunById(albunId);
             if (existAlbun != null)
             {
-                existAlbun.Title = albunDto.Title;
-                existAlbun.Duration = albunDto.Duration;
-                existAlbun.MusicianId = albunDto.MusicianId;
-                existAlbun.MusicianName = albunDto.MusicianName;
-                existAlbun.Songs = albunDto.Songs;
+                if (!string.IsNullOrEmpty(albunDto.MusicianName))
+                {
+
+                    existAlbun.Title = albunDto.Title;
+                    existAlbun.Duration = albunDto.Duration;
+                    existAlbun.MusicianId = albunDto.MusicianId;
+                    existAlbun.MusicianName = albunDto.MusicianName;
+                    existAlbun.Songs = albunDto.Songs;
+                    _albunRepository.UpdateAlbun(existAlbun);
+                    return _operationResultService.CreateSuccessResult("Albun Updated");
+                }
+                else
+                {
+                    return _operationResultService.CreateFailureResult("Musician Name cannot be empty.");
+                }
             }
             else
             {
-                throw new InvalidOperationException("Albun not found");
+               return _operationResultService.CreateFailureResult("Albun not found");
             }
-            _albunRepository.UpdateAlbun(existAlbun);
         }
     }
 }

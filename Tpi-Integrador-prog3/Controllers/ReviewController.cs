@@ -1,13 +1,13 @@
 ﻿using Application.Interfaces;
 using Application.Models;
-using Domain.Entities;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Tpi_Integrador_prog3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ReviewController : ControllerBase
     {
         private readonly IReviewService _reviewService;
@@ -18,12 +18,14 @@ namespace Tpi_Integrador_prog3.Controllers
         }
 
         [HttpGet("GetReviews")]
-        public IActionResult GetReviews()
+        [Authorize("All")]
+        public IActionResult GetAllReviews()
         {
             return Ok(_reviewService.GetAllReviews());
         }
         [HttpGet("GetReview/{reviewId}")]
-        public IActionResult GetReview([FromRoute] int reviewId)
+        [Authorize("All")]
+        public IActionResult GetReviewById([FromRoute] int reviewId)
         {
             if (_reviewService.GetReviewById(reviewId) == null)
             {
@@ -32,27 +34,39 @@ namespace Tpi_Integrador_prog3.Controllers
             return Ok(_reviewService.GetReviewById(reviewId));
         }
         [HttpPost("CreateReview")]
+        [Authorize("Subscriber")]
         public IActionResult CreateReview([FromBody] ReviewDto reviewDto)
         {
+            var result =_reviewService.CreateReview(reviewDto);
 
-            _reviewService.CreateReview(reviewDto);
-            return StatusCode(201);
+            if (result.Success)
+            {
+                return Ok(result.Message);   
+            } 
+            return BadRequest(result.Message);
         }
         [HttpDelete("DeeleteReview/{reviewId}")]
+        [Authorize("Subscriber")]
         public IActionResult DeleteReview([FromRoute] int reviewId)
         {
+            if (_reviewService.GetReviewById(reviewId) == null)
+            {
+                return BadRequest("The Albun does not exist");
+            };
             _reviewService.DeleteReview(reviewId);
             return Ok("Delete success");
         }
         [HttpPut("UpdateReview/{reviewId}")]
+        [Authorize("Subscriber")]
         public IActionResult UpdateReview([FromRoute] int reviewId, [FromBody] ReviewDto reviewdto)
         {
-            if (_reviewService.GetReviewById(reviewId) == null)
+            var result = _reviewService.UpdateReview(reviewId, reviewdto); 
+            if (result.Success)
             {
-                return BadRequest("The review does not exist");
-            }
             _reviewService.UpdateReview(reviewId, reviewdto);
-            return Ok("Review Updated");
+            return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
         }
     }
 }

@@ -71,8 +71,8 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
-    options.AddPolicy("Musician", policy => policy.RequireClaim(ClaimTypes.Role, "Musician"));
-    options.AddPolicy("Subscriber", policy => policy.RequireClaim(ClaimTypes.Role, "Subscriber"));
+    options.AddPolicy("Musician", policy => policy.RequireClaim(ClaimTypes.Role, "Musician", "Admin"));
+    options.AddPolicy("Subscriber", policy => policy.RequireClaim(ClaimTypes.Role, "Subscriber", "Admin"));
     options.AddPolicy("All", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Musician", "Subscriber"));
 });
 // Configuración de dependencias

@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Common;
+using Application.Interfaces;
 using Application.Models;
 using AutoMapper;
 using Domain.Entities;
@@ -20,18 +21,19 @@ namespace Application.Services
             _operationResultService = operationResultService;
         }
 
-        public void CreateReview(ReviewDto reviewdto)
+        public OperationResult CreateReview(ReviewDto reviewDto)
         {
-            var user = _userRepository.GetUserById(reviewdto.SubscriberId);
-            reviewdto.SubcriberUserName = user.UserName;
-            if (!string.IsNullOrEmpty(reviewdto.SubcriberUserName))
+            var user = _userRepository.GetUserById(reviewDto.SubscriberId);
+            reviewDto.SubcriberUserName = user.UserName;
+            if (!string.IsNullOrEmpty(reviewDto.SubcriberUserName))
             {
-                var ReviewNew = _mapper.Map<Review>(reviewdto);
-                _reviewRepository.CreateReview(ReviewNew);
+                var newReview = _mapper.Map<Review>(reviewDto);
+                _reviewRepository.CreateReview(newReview);
+                return _operationResultService.CreateSuccessResult("Review Created");
             }
             else
             {
-                _operationResultService.CreateFailureResult("SubscriberUserName cannot be empty.");
+                return _operationResultService.CreateFailureResult("SubscriberUserName cannot be empty.");
             }
 
         }
@@ -47,27 +49,30 @@ namespace Application.Services
             _operationResultService.CreateFailureResult("Review not found");
             return false;
         }
-        public IEnumerable<Review> GetAllReviews()
+        public IEnumerable<ReviewDto> GetAllReviews()
         {
-            return _reviewRepository.GetAllReviews();
+            var getReview = _reviewRepository.GetAllReviews();
+            return _mapper.Map<IEnumerable<ReviewDto>>(getReview);
         }
 
-        public Review GetReviewById(int id)
+        public ReviewDto GetReviewById(int id)
         {
-            return _reviewRepository.GetReviewById(id);
+            var getReview = _reviewRepository.GetReviewById(id);
+            return _mapper.Map<ReviewDto>(getReview);
         }
 
-        public List<Review> GetReviewsFromAlbunId(int albunId)
+        public List<ReviewDto> GetReviewsFromAlbunId(int albunId)
         {
-            return _reviewRepository.GetReviewsFromAlbunId(albunId).ToList();
+            var review =_reviewRepository.GetReviewsFromAlbunId(albunId);
+            return _mapper.Map<List<ReviewDto>>(review);
         }
 
-        public void UpdateReview(int reviewId ,ReviewDto reviewdto)
+        public OperationResult UpdateReview(int reviewId ,ReviewDto reviewdto)
         {
             var existsReview = _reviewRepository.GetReviewById(reviewId);
             if (existsReview == null)
             {
-                _operationResultService.CreateFailureResult("Review not found");
+               return _operationResultService.CreateFailureResult("Review not found");
             }
             existsReview.AlbunId = reviewdto.AlbunId;
             existsReview.SubscriberId = existsReview.SubscriberId;
@@ -77,6 +82,7 @@ namespace Application.Services
             existsReview.CreationDate = reviewdto.CreationDate;
 
             _reviewRepository.UpdateReview(existsReview);
+            return _operationResultService.CreateSuccessResult("Review Updated");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using Application.Common;
+using Application.Models;
 using Domain.Entities;
 
 
@@ -6,11 +7,11 @@ namespace Application.Interfaces
 {
     public interface IReviewService 
     {
-        Review GetReviewById(int id);
-        IEnumerable<Review> GetAllReviews();    
-        public List<Review> GetReviewsFromAlbunId(int albunId);
-        void CreateReview(ReviewDto reviewdto);
-        void UpdateReview(int reviewId, ReviewDto reviewdto);
+        ReviewDto GetReviewById(int id);
+        IEnumerable<ReviewDto> GetAllReviews();    
+        public List<ReviewDto> GetReviewsFromAlbunId(int albunId);
+        OperationResult CreateReview(ReviewDto reviewdto);
+        OperationResult UpdateReview(int reviewId, ReviewDto reviewdto);
         bool DeleteReview(int reviewId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using Application.Common;
+using Application.Models;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace Application.Interfaces
 {
     public interface IAlbunService
     {
-        IEnumerable<Albun> GetAllAlbun();
-        Albun? GetAlbunById(int id);
-        void CreateAlbun(AlbunDto albunDto);
-        void UpdateAlbun(int albunId,AlbunDto albunDto);
+        IEnumerable<AlbunDto> GetAllAlbun();
+        AlbunDto? GetAlbunById(int id);
+        OperationResult CreateAlbun(AlbunDto albunDto);
+        OperationResult UpdateAlbun(int albunId,AlbunDto albunDto);
         bool DeleteAlbun(int albunId);
     }
 }
