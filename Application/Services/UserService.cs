@@ -23,6 +23,10 @@ namespace Application.Services
         {
             return _userRepository.GetAllUsers();
         }
+        public User? GetUserById(int userId)
+        {
+            return _userRepository.GetUserById(userId);
+        }
         public OperationResult CreateSubscriber(SubscriberDto subscriberDto)
         {
             if (!ValidatePassword(subscriberDto.Password))

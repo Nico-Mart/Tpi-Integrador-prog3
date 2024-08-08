@@ -23,9 +23,21 @@ namespace Tpi_Integrador_prog3.Controllers
         {
             return Ok(_userService.GetAllUsers());
         }
+        [HttpGet("GetUserById/{userId}")]
+        [Authorize("Admin")]
+        public IActionResult GetUserById([FromRoute]int userId)
+        {
+            {
+                if (_userService.GetUserById(userId) == null)
+                {
+                    return NotFound("The User does not exist");
+                }
+                return Ok(_userService.GetUserById(userId));
+            }
+        }
 
         [HttpPost("CreateSubscriber")]
-        [Authorize("All")]
+        [AllowAnonymous]
         public IActionResult CreateSub([FromBody] SubscriberDto subscriberDto)
         {
             var result = _userService.CreateSubscriber(subscriberDto);
@@ -33,7 +45,7 @@ namespace Tpi_Integrador_prog3.Controllers
             {
                 return BadRequest(result.Message);
             }
-            return StatusCode(StatusCodes.Status201Created, result.Message);
+            return Ok(result.Message);
         }
 
         [HttpPost("CreateAdmin")]
@@ -45,7 +57,7 @@ namespace Tpi_Integrador_prog3.Controllers
             {
                 return BadRequest(result.Message);
             }
-            return StatusCode(StatusCodes.Status201Created, result.Message);
+            return Ok(result.Message);
         }
 
         [HttpPost("CreateMusician")]
@@ -57,9 +69,10 @@ namespace Tpi_Integrador_prog3.Controllers
             {
                 return BadRequest(result.Message);
             }
-            return StatusCode(StatusCodes.Status201Created, result.Message);
+            return Ok(result.Message);
         }
-        [HttpPut("UpdateSubscriber/{idSubscriber}")]
+
+        [HttpPatch("UpdateSubscriber/{idSubscriber}")]
         [Authorize("Subscriber")]
         public IActionResult UpdateSubscriber(int idSubscriber, [FromBody] SubscriberDto subscriber)
         {
@@ -70,7 +83,8 @@ namespace Tpi_Integrador_prog3.Controllers
             }
             return Ok(result.Message);
         }
-        [HttpPut("UpdateMusician/{idMusician}")]
+
+        [HttpPatch("UpdateMusician/{idMusician}")]
         [Authorize("Musician")]
         public IActionResult UpdateMusician(int idMusician, [FromBody] MusicianDto musician)
         {
@@ -81,19 +95,29 @@ namespace Tpi_Integrador_prog3.Controllers
             }
             return Ok(result.Message);
         }
+
         [HttpDelete("DeleteUserById/{id}")]
         [Authorize("Admin")]
         public IActionResult DeleteUserById(int id)
         {
+            if (_userService.GetUserById(id) == null)
+            {
+                return NotFound("The User does not exist");
+            }
             _userService.DeleteUserById(id);
-            return Ok("User Delete");
+            return Ok("User Deleted");
         }
+
         [HttpDelete("DeleteUserByEmail/{email}")]
         [Authorize("Admin")]
         public IActionResult DeleteUserByEmail(string email)
         {
+            if (_userService.GetUserByEmail(email) == null)
+            {
+                return NotFound("The User does not exist");
+            }
             _userService.DeleteUserByEmail(email);
-            return Ok("User Delete");
+            return Ok("User Deleted");
         }
 
         [HttpGet("GetUserByUsername/{username}")]
@@ -103,7 +127,7 @@ namespace Tpi_Integrador_prog3.Controllers
             var result = _userService.GetUserByUserName(username);
             if (result == null)
             {
-                return BadRequest("User Not Found");
+                return NotFound("User Not Found");
             }
             return Ok(result);
         }
@@ -115,7 +139,7 @@ namespace Tpi_Integrador_prog3.Controllers
             var result = _userService.GetUserByEmail(email);
             if (result == null)
             {
-                return BadRequest("User Not Found");
+                return NotFound("User Not Found");
             }
             return Ok(result);
         }

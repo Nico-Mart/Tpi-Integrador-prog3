@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication;
 using System.Reflection;
 using System.Security.Claims;
+using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,8 +72,9 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
-    options.AddPolicy("Musician", policy => policy.RequireClaim(ClaimTypes.Role, "Musician", "Admin"));
-    options.AddPolicy("Subscriber", policy => policy.RequireClaim(ClaimTypes.Role, "Subscriber", "Admin"));
+    options.AddPolicy("Musician", policy => policy.RequireClaim(ClaimTypes.Role, "Musician"));
+    options.AddPolicy("Subscriber", policy => policy.RequireClaim(ClaimTypes.Role, "Subscriber"));
+    options.AddPolicy("SubAdmin", policy => policy.RequireClaim(ClaimTypes.Role, "Subscriber", "Admin"));
     options.AddPolicy("All", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Musician", "Subscriber"));
 });
 // Configuración de dependencias

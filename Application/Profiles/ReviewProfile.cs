@@ -14,6 +14,7 @@ namespace Application.Profiles
         public ReviewProfile()
         {
         CreateMap<ReviewDto, Review>();
+            CreateMap<Review, ReviewDto>();
         }
         
     }

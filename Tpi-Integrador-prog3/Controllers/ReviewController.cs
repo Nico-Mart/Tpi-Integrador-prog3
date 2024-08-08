@@ -16,13 +16,14 @@ namespace Tpi_Integrador_prog3.Controllers
         {
             _reviewService = reviewService;
         }
-
+        
         [HttpGet("GetReviews")]
         [Authorize("All")]
         public IActionResult GetAllReviews()
         {
             return Ok(_reviewService.GetAllReviews());
         }
+
         [HttpGet("GetReview/{reviewId}")]
         [Authorize("All")]
         public IActionResult GetReviewById([FromRoute] int reviewId)
@@ -33,6 +34,7 @@ namespace Tpi_Integrador_prog3.Controllers
             }
             return Ok(_reviewService.GetReviewById(reviewId));
         }
+
         [HttpPost("CreateReview")]
         [Authorize("Subscriber")]
         public IActionResult CreateReview([FromBody] ReviewDto reviewDto)
@@ -45,8 +47,9 @@ namespace Tpi_Integrador_prog3.Controllers
             } 
             return BadRequest(result.Message);
         }
+
         [HttpDelete("DeeleteReview/{reviewId}")]
-        [Authorize("Subscriber")]
+        [Authorize("SubAdmin")]
         public IActionResult DeleteReview([FromRoute] int reviewId)
         {
             if (_reviewService.GetReviewById(reviewId) == null)
@@ -56,7 +59,8 @@ namespace Tpi_Integrador_prog3.Controllers
             _reviewService.DeleteReview(reviewId);
             return Ok("Delete success");
         }
-        [HttpPut("UpdateReview/{reviewId}")]
+
+        [HttpPatch("UpdateReview/{reviewId}")]
         [Authorize("Subscriber")]
         public IActionResult UpdateReview([FromRoute] int reviewId, [FromBody] ReviewDto reviewdto)
         {
@@ -68,5 +72,6 @@ namespace Tpi_Integrador_prog3.Controllers
             }
             return BadRequest(result.Message);
         }
+
     }
 }

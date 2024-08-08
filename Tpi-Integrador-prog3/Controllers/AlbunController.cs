@@ -60,7 +60,7 @@ namespace Tpi_Integrador_prog3.Controllers
             _albunService.DeleteAlbun(albunId);
             return Ok("Delete success");
         }
-        [HttpPut("UpdateAlbun/{albunId}")]
+        [HttpPatch("UpdateAlbun/{albunId}")]
         [Authorize("Musician")]
         public IActionResult UpdateAlbun([FromRoute] int albunId ,[FromBody] AlbunDto albunDto)
         {
